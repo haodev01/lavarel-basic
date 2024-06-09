@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 class Tag extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name'];
     public static function boot()
     {
         parent::boot();
