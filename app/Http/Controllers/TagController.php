@@ -6,15 +6,50 @@ use App\Http\Requests\TagRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+
 class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $tags = Tag::paginate(10);
+
+        $query = Tag::query();
+        $keyword = '';
+        if ($request->get('keyword')) {
+            $keyword = $request->get('keyword');
+            $query->where('name', 'like', '%' . $keyword . '%');
+        }
+        $key = "created_at";
+        $value = "desc";
+        if ($request->has('sort')) {
+            // Thêm điều kiện sort vào truy vấn dựa trên yêu cầu của người dùng
+            switch ($request->input('sort')) {
+                case 'name_asc':
+                    $key = "name";
+                    $value = "asc";
+                    break;
+                case 'name_desc':
+                    $key = "name";
+                    $value = "desc";
+                    break;
+                case 'created_at_asc':
+                    $key = "created_at";
+                    $value = "asc";
+                    break;
+                case 'created_at_desc':
+                    $key = "created_at";
+                    $value = "desc";
+                    break;
+                default:
+                    $key = "created_at";
+                    $value = "desc";
+            }
+        }
+        $query->orderBy($key, $value);
+        $tags = $query->paginate(10);
         return view('admin.pages.tag.index', compact('tags'));
     }
 

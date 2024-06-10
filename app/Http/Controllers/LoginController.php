@@ -7,14 +7,17 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class LoginController extends Controller
 {
     //
-    public function login() {
+    public function login()
+    {
         return view('admin.auth.login');
     }
-    public function register() {
+    public function register()
+    {
         return view('admin.auth.register');
     }
     public function authenticate(Request $request)
@@ -64,5 +67,16 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('admin.login');
+    }
+    public function forgotPassword()
+    {
+        return view('admin.auth.forgot-password');
+    }
+    public function doForgotPassword(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
     }
 }
