@@ -22,3 +22,9 @@ Route::get('/', function () {
     return view('admin.dashboard.home');
 })->middleware('auth')->name('admin.dashboard.home');
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('admin.logout');
+
+Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
+    ->name('ckfinder_connector');
+
+Route::any('/ckfinder/browser', '\CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
+    ->name('ckfinder_browser');

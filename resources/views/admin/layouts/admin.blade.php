@@ -17,14 +17,8 @@
 
     <link rel="stylesheet" href="{{asset('assets/vendors/select2/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css')}}">
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <!-- End layout styles -->
     <link rel="stylesheet" href="{{ asset('assets/images/favicon.png') }}">
 </head>
 
@@ -48,6 +42,7 @@
     <script src="{{ asset('assets/vendors/jvectormap/jquery-jvectormap.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
     <script src="{{ asset('assets/vendors/owl-carousel-2/owl.carousel.min.js') }}"></script>
+
 
 
     <!-- End plugin js for this page -->

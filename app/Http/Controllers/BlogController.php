@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateArticleRequest;
 use App\Models\Blog;
+use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,8 @@ class BlogController extends Controller
     {
         //
         $tags = Tag::all();
-        return view('admin.pages.blogs.create', compact('tags'));
+        $categories = Category::all();
+        return view('admin.pages.blogs.create', compact('tags', 'categories'));
     }
 
     /**
@@ -52,6 +54,7 @@ class BlogController extends Controller
         ];
         $blog = Blog::create($dataTodo);
         $this->createTagForArticle($request, $blog);
+        $this->createCategoryForArticle($request, $blog);
         return redirect()->route('blogs.index')->with('success', 'Thêm bài viết thành công');
     }
 
@@ -108,6 +111,28 @@ class BlogController extends Controller
             }
             if (!empty($arrTags)) {
                 $blog->tags()->attach($arrTags);
+            }
+        }
+    }
+    private function createCategoryForArticle(Request $request, Blog $blog)
+    {
+        $categories = $request->get('categories');
+
+        if (!empty($categories)) {
+            $arrCate = [];
+            foreach ($categories as $tag) {
+                $cateFix = (int) $tag;
+                if ($cateFix) {
+                    $cateObj = Category::find($cateFix);
+                } else {
+                    $cateObj = null;
+                }
+                if (!empty($cateObj)) {
+                    $arrCate[] = $cateObj->id;
+                }
+            }
+            if (!empty($arrCate)) {
+                $blog->categories()->attach($arrCate);
             }
         }
     }
