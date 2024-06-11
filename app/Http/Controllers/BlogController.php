@@ -9,6 +9,7 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Mews\Purifier\Facades\Purifier;
 
 class BlogController extends Controller
 {
@@ -48,7 +49,7 @@ class BlogController extends Controller
         }
         $dataTodo = [
             'title' => $request->get('title'),
-            'description' => $request->get('title'),
+            'description' => Purifier::clean($request->get('description')),
             'author_id' => Auth::user()->id,
             'thumb' => $thumb
         ];

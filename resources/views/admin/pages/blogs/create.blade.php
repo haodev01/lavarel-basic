@@ -3,7 +3,7 @@
 <script src="{{asset('assets/plugins/ckeditor/ckeditor.js')}}"></script>
 @section('content')
 <div>
-  <textarea id="article_content" name="content" rows="10" class="form-control" placeholder="Nhập nội dung">{!! old('content') !!}</textarea>
+  
   <div>
     <h1 class="card-title">Tạo bài viêt</h1>
   </div>
@@ -11,7 +11,7 @@
   <div class="alert alert-danger">{{ $message }}</div>
   @enderror
   <div class="row mt-5">
-    <div class="col-6">
+    <div class="col-9">
       <form class="form" method="POST" action="{{ route('blogs.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
@@ -23,7 +23,7 @@
         </div>
         <div class="form-group">
           <label for="exampleInputUsername1">Mô tả</label>
-          <input autofocus value="{{ old('description') }}" type="text" class="form-control" name="description" placeholder="Mô tả bài viết">
+          <textarea id="article_content" name="description" rows="10" class="form-control" placeholder="Nhập nội dung">{!! old('description') !!}</textarea>
           @error('description')
           <span class="text-danger">{{ $message }}</span>
           @enderror
